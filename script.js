@@ -1,11 +1,11 @@
 const matrix = [];
-const n = 100;
+const n = 50;
 
 var grassArr = [];
 var grassEaterArr = [];
 var mansterArr = [];
 
-var side = 10;
+var side = 20;
 
 
 function setup() {
@@ -28,9 +28,6 @@ function setup() {
             num++;
         }
     }
-    matrix[n / 2][n / 2] = 3;
-    console.table(matrix);
-
 
 
 

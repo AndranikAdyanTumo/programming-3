@@ -1,7 +1,6 @@
-class Manster {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
+class Manster extends LivingCreture{
+    constructor(x, y, index) {
+        super(x, y, index)
         this.energy = 30;
 
         this.directions = [];
@@ -21,18 +20,8 @@ class Manster {
     }
     
     chooseCell(character) {
-        this.getCordinates()
-        var found = [];
-        for (var i in this.directions) {
-            var x = this.directions[i][0];
-            var y = this.directions[i][1];
-            if (x >= 0 && x < matrix[0].length && y >= 0 && y < matrix.length) {
-                if (matrix[y][x] == character) {
-                    found.push(this.directions[i]);
-                }
-            }
-        }
-        return found;
+        this.getCordinates();
+        return super.chooseCell(character);
 
     }
     
@@ -49,7 +38,7 @@ class Manster {
     }
     
     eat() {
-        var found = this.chooseCell(2 || 4);
+        var found = this.chooseCell(2);
         const newCell = random(found);
 
         if (newCell) {
@@ -80,7 +69,9 @@ class Manster {
 
 
     move() {
-        var found = this.chooseCell(0 || 1);
+        var found1 = this.chooseCell(0);
+        var found2 = this.chooseCell(1);
+        var found = found1.concat(found2);
         var newCell = random(found);
 
         if (newCell) {
@@ -88,7 +79,7 @@ class Manster {
             var newY = newCell[1];
             matrix[newY] [newX] = 3;
 
-            matrix[this.y] [this.x] = 0 || 1;
+            matrix[this.y] [this.x] = Math.round(Math.random(1, 2));
 
             this.x = newX;
             this.y = newY;
