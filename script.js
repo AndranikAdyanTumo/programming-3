@@ -1,11 +1,12 @@
 const matrix = [];
 const n = 50;
+var side = 10;
+
 
 var grassArr = [];
 var grassEaterArr = [];
 var mansterArr = [];
 
-var side = 20;
 
 
 function setup() {
@@ -16,9 +17,7 @@ function setup() {
         matrix[i] = [];
 
         for (let j = 0; j < n; j++) {
-            if(num < 2){
-                matrix[i][j] = random([0, 3]);
-            }else if (num < 20) {
+            if (num < 20) {
                 matrix[i][j] = random([0, 1]);
             } else if (num == 23) {
                 num = 0;
@@ -28,6 +27,9 @@ function setup() {
             num++;
         }
     }
+    matrix[n/2][n/2] = 3
+    console.table(matrix);
+
 
 
 
@@ -45,8 +47,8 @@ function setup() {
                 const gre = new GrassEater(j, i, 1);
                 grassEaterArr.push(gre);
             } else if (matrix[i][j] === 3) {
-                const mow = new Manster(j, i, 1);
-                grassEaterArr.push(mow);
+                const all = new Manster(j, i, 1);
+                grassEaterArr.push(all);
             }
         }
     }
@@ -76,7 +78,6 @@ function draw() {
 
         }
     }
-
 
 
 

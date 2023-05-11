@@ -1,13 +1,15 @@
-class Manster extends LivingCreture{
-    constructor(x, y, index) {
-        super(x, y, index)
-        this.energy = 30;
+class Manster extends LivingCreature{
+    constructor(x, y, index){
 
-        this.directions = [];
-    }
-
-    getCordinates() {
+        super(x, y, index);
+        this.energy = 50;
+        
+        }
+        
+        getNewCoordinates() {
+        
         this.directions = [
+        
             [this.x - 1, this.y - 1],
             [this.x, this.y - 1],
             [this.x + 1, this.y - 1],
@@ -16,14 +18,18 @@ class Manster extends LivingCreture{
             [this.x - 1, this.y + 1],
             [this.x, this.y + 1],
             [this.x + 1, this.y + 1]
+        
         ];
-    }
-    
-    chooseCell(character) {
-        this.getCordinates();
-        return super.chooseCell(character);
-
-    }
+        
+        }
+        
+        chooseCell(character) {
+            
+            this.getNewCoordinates();
+            return super.chooseCell(character);
+        
+        }
+        
     
     mul() {
         var found = this.chooseCell(1);
@@ -33,7 +39,7 @@ class Manster extends LivingCreture{
             var newY = newCell[1];
             matrix[newY] [newX] = 3;
             mansterArr.push(new Manster(newX, newY));
-            this.energy = 1;
+            this.energy = 20;
         }
     }
     
@@ -69,9 +75,7 @@ class Manster extends LivingCreture{
 
 
     move() {
-        var found1 = this.chooseCell(0);
-        var found2 = this.chooseCell(1);
-        var found = found1.concat(found2);
+        var found = this.chooseCell(0);
         var newCell = random(found);
 
         if (newCell) {
@@ -79,7 +83,7 @@ class Manster extends LivingCreture{
             var newY = newCell[1];
             matrix[newY] [newX] = 3;
 
-            matrix[this.y] [this.x] = Math.round(Math.random(1, 2));
+            matrix[this.y] [this.x] = 0;
 
             this.x = newX;
             this.y = newY;
