@@ -1,4 +1,6 @@
-class GrassEater {
+const LivingCreature = require("./livingCreature")
+
+module.exports = class GrassEater {
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -38,7 +40,7 @@ class GrassEater {
 
     mul() {
         var found = this.chooseCell(0);
-        var newCell = random(found);
+        var newCell = this.random(found);
         if(newCell && this.energy >= 2) {
             var newX = newCell[0];
             var newY = newCell[1];
@@ -50,7 +52,7 @@ class GrassEater {
 
     eat() {
         var found = this.chooseCell(1);
-        const newCell = random(found);
+        const newCell = this.random(found);
 
         if (newCell) {
             var newX = newCell[0];
@@ -79,7 +81,7 @@ class GrassEater {
 
     move() {
         var found = this.chooseCell(0);
-        var newCell = random(found);
+        var newCell = this.random(found);
 
         if (newCell) {
             var newX = newCell[0];

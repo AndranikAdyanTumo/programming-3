@@ -1,62 +1,22 @@
-const matrix = [];
-const n = 50;
+const { Socket } = require('engine.io');
+var io = require('socket.io')
 var side = 10;
 
-
-var grassArr = [];
-var grassEaterArr = [];
-var mansterArr = [];
-
+let myMatrix = []
 
 
 function setup() {
-    frameRate(10);
+    setTimeout(() => {
 
-    let num = 0;
-    for (let i = 0; i < n; i++) {
-        matrix[i] = [];
+        createCanvas(myMatrix[0].length * side, myMatrix.length * side);
+        background('#acacac');
 
-        for (let j = 0; j < n; j++) {
-            if (num < 20) {
-                matrix[i][j] = random([0, 1]);
-            } else if (num == 23) {
-                num = 0;
-            } else if (num > 20) {
-                matrix[i][j] = random([0, 1, 2]);
-            }
-            num++;
-        }
-    }
-    matrix[n/2][n/2] = 3
-    console.table(matrix);
+    }, 500);
 
-
-
-
-    createCanvas(matrix[0].length * side, matrix.length * side);
-    background('#acacac');
-
-
-
-    for (let i = 0; i < matrix.length; i++) {
-        for (let j = 0; j < matrix[i].length; j++) {
-            if (matrix[i][j] === 1) {
-                const gr = new Grass(j, i, 1);
-                grassArr.push(gr);
-            } else if (matrix[i][j] === 2) {
-                const gre = new GrassEater(j, i, 1);
-                grassEaterArr.push(gre);
-            } else if (matrix[i][j] === 3) {
-                const all = new Manster(j, i, 1);
-                grassEaterArr.push(all);
-            }
-        }
     }
 
 
-}
-
-function draw() {
+function drawing(matrix) {
 
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
@@ -80,15 +40,15 @@ function draw() {
     }
 
 
-
-    for (var i in grassArr) {
-        grassArr[i].mul();
-    }
-    for (var i in grassEaterArr) {
-        grassEaterArr[i].eat();
-    }
-    for (var i in mansterArr) {
-        mansterArr[i].eat();
-    }
-
 }
+
+
+socket.on("initial", function(data){
+    myMatrix = data;
+    return myMatrix;
+})
+
+socket.on("send matrix", function(matrix){
+    drawing(matrix);
+
+})

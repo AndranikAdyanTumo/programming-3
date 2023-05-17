@@ -1,4 +1,6 @@
-class Manster extends LivingCreature{
+const LivingCreature = require("./livingCreature")
+
+module.exports = class Manster extends LivingCreature{
     constructor(x, y, index){
 
         super(x, y, index);
@@ -33,7 +35,7 @@ class Manster extends LivingCreature{
     
     mul() {
         var found = this.chooseCell(1);
-        var newCell = random(found);
+        var newCell = this.random(found);
         if(newCell && this.energy >= 2) {
             var newX = newCell[0];
             var newY = newCell[1];
@@ -45,7 +47,7 @@ class Manster extends LivingCreature{
     
     eat() {
         var found = this.chooseCell(2);
-        const newCell = random(found);
+        const newCell = this.random(found);
 
         if (newCell) {
             var newX = newCell[0];
@@ -76,7 +78,7 @@ class Manster extends LivingCreature{
 
     move() {
         var found = this.chooseCell(0);
-        var newCell = random(found);
+        var newCell = this.random(found);
 
         if (newCell) {
             var newX = newCell[0];
