@@ -1,5 +1,4 @@
 var express = require('express');
-const { setInterval } = require('timers/promises');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
@@ -14,7 +13,6 @@ app.get('/', function (req, res) {
 server.listen(3000);
 
 
-const LivingCreature = require("./livingCreature")
 const Grass = require("./grass")
 const GrassEater = require("./grassEater")
 const Manster = require("./manster")
@@ -28,8 +26,8 @@ matrix = [];
 let n = 50;
 
 function myRandom(arr){
-    index =  Math.floor(Math.random() * arr.length - 1)
-    return arr[index]
+    index = Math.floor(Math.random() * arr.length);
+    return arr[index];
 }
 
 function createCanvas(){
@@ -61,8 +59,8 @@ function createCanvas(){
                 const gre = new GrassEater(j, i, 1);
                 grassEaterArr.push(gre);
             } else if (matrix[i][j] === 3) {
-                const all = new Manster(j, i, 1);
-                grassEaterArr.push(all);
+                const manster = new Manster(j, i, 1);
+                grassEaterArr.push(manster);
             }
         }
     }
@@ -80,8 +78,6 @@ function drawGame(){
         mansterArr[i].eat();
     }
 
-    return matrix
-
 }
 
 
@@ -91,3 +87,9 @@ setInterval(() => {
     drawGame()
 
 }, 1000);
+
+io.on('connection', function(socket){
+    socket.emit('initial', matrix);
+    socket.emit('send matrix', matrix);
+
+})

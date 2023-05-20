@@ -1,13 +1,12 @@
-const { Socket } = require('engine.io');
-var io = require('socket.io')
-var side = 10;
 
+var side = 10;
+let socket =io ()
 let myMatrix = []
 
 
 function setup() {
     setTimeout(() => {
-
+        // console.log(myMatrix);
         createCanvas(myMatrix[0].length * side, myMatrix.length * side);
         background('#acacac');
 
@@ -17,7 +16,7 @@ function setup() {
 
 
 function drawing(matrix) {
-
+console.log(matrix);
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
 
@@ -48,7 +47,4 @@ socket.on("initial", function(data){
     return myMatrix;
 })
 
-socket.on("send matrix", function(matrix){
-    drawing(matrix);
-
-})
+socket.on("send matrix", drawing)

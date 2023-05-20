@@ -1,11 +1,9 @@
 const LivingCreature = require("./livingCreature")
 
-module.exports = class GrassEater {
+module.exports = class GrassEater extends LivingCreature {
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.energy = 3;
-
         this.directions = [];
     }
 

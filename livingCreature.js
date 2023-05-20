@@ -43,9 +43,10 @@ module.exports = class LivingCreature {
     }
 
     random(arr){
-        let res = Math.floor(Math.random() * arr.length)
+        let res = Math.floor(Math.random() * arr.length);
         
-        return res
+        return arr[res];
     }
+
 
 }
