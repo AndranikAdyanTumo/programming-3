@@ -1,6 +1,6 @@
 
 var side = 10;
-let socket =io ()
+let socket = io ()
 let myMatrix = []
 
 
@@ -37,14 +37,19 @@ console.log(matrix);
 
         }
     }
+}
 
+grassCount = document.getElementById('grassNum')
 
+function getGrassNum(num) {
+    grassCount.innerText = num
 }
 
 
 socket.on("initial", function(data){
+    console.log(data)
     myMatrix = data;
-    return myMatrix;
 })
 
 socket.on("send matrix", drawing)
+socket.on("grass number", getGrassNum)

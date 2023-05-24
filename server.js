@@ -23,32 +23,47 @@ grassEaterArr = [];
 mansterArr = [];
 matrix = [];
 
-let n = 50;
 
-function myRandom(arr){
-    index = Math.floor(Math.random() * arr.length);
-    return arr[index];
-}
 
-function createCanvas(){
-    let num = 0;
-    for (let i = 0; i < n; i++) {
-        matrix[i] = [];
-
-        for (let j = 0; j < n; j++) {
-            if (num < 20) {
-                matrix[i][j] = myRandom([0, 1]);
-            } else if (num == 23) {
-                num = 0;
-            } else if (num > 20) {
-                matrix[i][j] = myRandom([0, 1, 2]);
-            }
-            num++;
+function generate(matLen,gr,grEat,manster) {
+    for (let i = 0; i < matLen; i++) {
+        matrix[i] = []
+        for (let j = 0; j < matLen; j++) {
+            matrix[i][j] = 0
         }
     }
-    matrix[n/2][n/2] = 3
 
+    for (let i = 0; i < gr; i++) {
+        let x = Math.floor(Math.random()*matLen)
+        let y = Math.floor(Math.random()*matLen)
+        if(matrix[y][x] == 0) {
+            matrix[y][x] = 1
+        }
+    }
+    for (let i = 0; i < grEat; i++) {
+        let x = Math.floor(Math.random()*matLen)
+        let y = Math.floor(Math.random()*matLen)
+        //console.log(x,y);
+        if(matrix[y][x] == 0) {
+            matrix[y][x] = 2
+        }
+    }
+    for (let i = 0; i < manster; i++) {
+        let x = Math.floor(Math.random()*matLen)
+        let y = Math.floor(Math.random()*matLen)
+        //console.log(x,y);
+        if(matrix[y][x] == 0) {
+            matrix[y][x] = 3
+        }
+    }
+    
+    io.emit("send matrix",matrix)
+    return matrix
+}
 
+generate(50, 100, 100, 50);
+
+function createCanvas(){
 
     for (let i = 0; i < matrix.length; i++) {
         for (let j = 0; j < matrix[i].length; j++) {
@@ -64,6 +79,7 @@ function createCanvas(){
             }
         }
     }
+    return matrix
 }
 
 
@@ -77,6 +93,8 @@ function drawGame(){
     for (var i in mansterArr) {
         mansterArr[i].eat();
     }
+    io.emit("send matrix",matrix)
+    return matrix
 
 }
 
@@ -86,10 +104,10 @@ setInterval(() => {
 
     drawGame()
 
-}, 1000);
+}, 500);
 
 io.on('connection', function(socket){
     socket.emit('initial', matrix);
     socket.emit('send matrix', matrix);
-
+    socket.emit('gass number', grassArr.length)
 })

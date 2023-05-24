@@ -4,7 +4,7 @@ module.exports = class Manster extends LivingCreature{
     constructor(x, y, index){
 
         super(x, y, index);
-        this.energy = 50;
+        this.energy = 15;
         
         }
         
