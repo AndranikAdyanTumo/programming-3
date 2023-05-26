@@ -41,7 +41,7 @@ module.exports = class Manster extends LivingCreature{
             var newY = newCell[1];
             matrix[newY] [newX] = 3;
             mansterArr.push(new Manster(newX, newY));
-            this.energy = 20;
+            this.energy = 15;
         }
     }
     
@@ -57,7 +57,7 @@ module.exports = class Manster extends LivingCreature{
 
             this.x = newX;
             this.y = newY;
-            this.energy++;
+            this.energy+=2;
 
             for (var i in grassEaterArr) {
                 if (newX == grassEaterArr[i].x && newY == grassEaterArr[i].y) {

@@ -16,16 +16,20 @@ server.listen(3000);
 const Grass = require("./grass")
 const GrassEater = require("./grassEater")
 const Manster = require("./manster")
+const BigManster = require("./bigManster")
+const Bomber = require("./bomber")
 
 
 grassArr = [];
 grassEaterArr = [];
 mansterArr = [];
+bigMansterArr = [];
+bomberArr = [];
 matrix = [];
 
 
 
-function generate(matLen,gr,grEat,manster) {
+function generate(matLen,gr,grEat,manster, bigManster, bomber) {
     for (let i = 0; i < matLen; i++) {
         matrix[i] = []
         for (let j = 0; j < matLen; j++) {
@@ -43,7 +47,6 @@ function generate(matLen,gr,grEat,manster) {
     for (let i = 0; i < grEat; i++) {
         let x = Math.floor(Math.random()*matLen)
         let y = Math.floor(Math.random()*matLen)
-        //console.log(x,y);
         if(matrix[y][x] == 0) {
             matrix[y][x] = 2
         }
@@ -51,9 +54,24 @@ function generate(matLen,gr,grEat,manster) {
     for (let i = 0; i < manster; i++) {
         let x = Math.floor(Math.random()*matLen)
         let y = Math.floor(Math.random()*matLen)
-        //console.log(x,y);
         if(matrix[y][x] == 0) {
             matrix[y][x] = 3
+        }
+    }
+
+    for (let i = 0; i < bigManster; i++) {
+        let x = Math.floor(Math.random()*matLen)
+        let y = Math.floor(Math.random()*matLen)
+        if(matrix[y][x] == 0) {
+            matrix[y][x] = 4
+        }
+    }
+
+    for (let i = 0; i < bomber; i++) {
+        let x = Math.floor(Math.random()*matLen)
+        let y = Math.floor(Math.random()*matLen)
+        if(matrix[y][x] == 0) {
+            matrix[y][x] = 5;
         }
     }
     
@@ -61,7 +79,7 @@ function generate(matLen,gr,grEat,manster) {
     return matrix
 }
 
-generate(50, 100, 100, 50);
+generate(50, 100, 100, 50, 30, 1);
 
 function createCanvas(){
 
@@ -75,7 +93,13 @@ function createCanvas(){
                 grassEaterArr.push(gre);
             } else if (matrix[i][j] === 3) {
                 const manster = new Manster(j, i, 1);
-                grassEaterArr.push(manster);
+                mansterArr.push(manster);
+            } else if (matrix[i][j] === 4) {
+                const bigManster = new BigManster(j, i, 1);
+                bigMansterArr.push(bigManster);
+            } else if (matrix[i][j] === 5) {
+                const bomber = new Bomber(j, i, 1);
+                bomberArr.push(bomber);
             }
         }
     }
@@ -93,6 +117,13 @@ function drawGame(){
     for (var i in mansterArr) {
         mansterArr[i].eat();
     }
+    for(var i in bigMansterArr){
+        bigMansterArr[i].eat();
+    }
+    for(var i in bomberArr){
+        bomberArr[i].move();
+    }
+
     io.emit("send matrix",matrix)
     return matrix
 
