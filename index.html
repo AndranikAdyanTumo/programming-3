@@ -6,21 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Game</title>
+
+    <link rel="stylesheet" href="\style.css">
+
 </head>
 
-<style>
-
-    #grassNum{
-        display: inline-block;
-    };
-
-</style>
 
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/p5.min.js"></script>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    
+    <div>Grass:</div><p class="count", id="grassNum"> 0</p>
+    <div>Grass Eater:</div><p class="count", id="grassEaterNum"> 0</p>
+    <div>Manster:</div><p class="count", id="mansterNum"> 0</p>
+    <div>Big Manster:</div><p class="count", id="bigMansterNum"> 0</p>
+    <div>Bomber:</div><p class="count", id="bomberNum"> 0</p>
 
-    <div>Grass:</div><p id="grassNum"> 0</p>
+    <button id="liser">Liser</button>
+    <button id="weather">Weather</button>
+
     <script src="script.js" ></script>
 </body>
 

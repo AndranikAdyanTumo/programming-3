@@ -1,0 +1,8 @@
+.count{
+    display: inline-block;
+};
+
+#grassNum{
+    display: inline-block;
+    background-color: aqua;
+}

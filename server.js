@@ -129,15 +129,21 @@ function drawGame(){
 
 }
 
-
 createCanvas()
 setInterval(() => {
     data  = {
-        grass : grassArr.length
+        grass : grassArr.length,
+        grassEater: grassEaterArr.length,
+        manster: mansterArr.length,
+        bigManster: bigMansterArr.length,
+        bomber: bomberArr.length
     }
-    io.emit('grass number',data)
+    io.emit('statistics',data)
     drawGame()
 }, 500);
+
+
+
 
 io.on('connection', function(socket){
     socket.emit('initial', matrix);

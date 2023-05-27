@@ -3,7 +3,7 @@ const LivingCreature = require("./livingCreature")
 module.exports = class GrassEater extends LivingCreature {
     constructor(x, y) {
         super(x, y);
-        this.energy = 5;
+        this.energy = 15;
         this.directions = [];
     }
 
@@ -44,7 +44,7 @@ module.exports = class GrassEater extends LivingCreature {
             var newY = newCell[1];
             matrix[newY] [newX] = 2;
             grassEaterArr.push(new GrassEater(newX, newY));
-            this.energy = 5;
+            this.energy = 10;
         }
     }
 
