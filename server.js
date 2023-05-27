@@ -132,13 +132,15 @@ function drawGame(){
 
 createCanvas()
 setInterval(() => {
-
+    data  = {
+        grass : grassArr.length
+    }
+    io.emit('grass number',data)
     drawGame()
-
 }, 500);
 
 io.on('connection', function(socket){
     socket.emit('initial', matrix);
     socket.emit('send matrix', matrix);
-    socket.emit('gass number', grassArr.length)
+    
 })
