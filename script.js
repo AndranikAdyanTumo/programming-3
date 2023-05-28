@@ -1,3 +1,5 @@
+
+
 var side = 10;
 let socket = io ()
 let myMatrix = []
@@ -10,7 +12,7 @@ function setup() {
 
     }, 500);
 
-    }
+}
 
 
 
@@ -18,13 +20,14 @@ weatherBtn = document.getElementById('weather');
 weatherBtn.addEventListener('click', weatherColors);
 
 
-weather = false;
+weather = true;
 function weatherColors(){
     if(weather){
         weather = false;
     }else{
         weather = true;
     }
+    socket.emit("signal",weather)
 }
 
 
@@ -60,9 +63,6 @@ function drawing(matrix) {
 
 
             }
-
-
-
             if (matrix[y][x] == 0) {
                 fill(colors.bg);
             } else if (matrix[y][x] == 1) {
@@ -80,9 +80,6 @@ function drawing(matrix) {
             }
 
             rect(x * side, y * side, side, side);
-
-
-
         }
     }
 }

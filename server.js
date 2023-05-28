@@ -2,12 +2,12 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-
+let mull = 4
 
 app.use(express.static("."));
 
 app.get('/', function (req, res) {
-   res.redirect('index.html');
+    res.redirect('index.html');
 });
 
 server.listen(3000);
@@ -29,7 +29,13 @@ matrix = [];
 
 
 
-function generate(matLen,gr,grEat,manster, bigManster, bomber) {
+// liserBtn = document.getElementById('liser');
+// liserBtn.addEventListener('click', createLiser);
+
+
+
+
+function generate(matLen, gr, grEat, manster, bigManster, bomber) {
     for (let i = 0; i < matLen; i++) {
         matrix[i] = []
         for (let j = 0; j < matLen; j++) {
@@ -38,50 +44,49 @@ function generate(matLen,gr,grEat,manster, bigManster, bomber) {
     }
 
     for (let i = 0; i < gr; i++) {
-        let x = Math.floor(Math.random()*matLen)
-        let y = Math.floor(Math.random()*matLen)
-        if(matrix[y][x] == 0) {
+        let x = Math.floor(Math.random() * matLen)
+        let y = Math.floor(Math.random() * matLen)
+        if (matrix[y][x] == 0) {
             matrix[y][x] = 1
         }
     }
     for (let i = 0; i < grEat; i++) {
-        let x = Math.floor(Math.random()*matLen)
-        let y = Math.floor(Math.random()*matLen)
-        if(matrix[y][x] == 0) {
+        let x = Math.floor(Math.random() * matLen)
+        let y = Math.floor(Math.random() * matLen)
+        if (matrix[y][x] == 0) {
             matrix[y][x] = 2
         }
     }
     for (let i = 0; i < manster; i++) {
-        let x = Math.floor(Math.random()*matLen)
-        let y = Math.floor(Math.random()*matLen)
-        if(matrix[y][x] == 0) {
+        let x = Math.floor(Math.random() * matLen)
+        let y = Math.floor(Math.random() * matLen)
+        if (matrix[y][x] == 0) {
             matrix[y][x] = 3
         }
     }
 
     for (let i = 0; i < bigManster; i++) {
-        let x = Math.floor(Math.random()*matLen)
-        let y = Math.floor(Math.random()*matLen)
-        if(matrix[y][x] == 0) {
+        let x = Math.floor(Math.random() * matLen)
+        let y = Math.floor(Math.random() * matLen)
+        if (matrix[y][x] == 0) {
             matrix[y][x] = 4
         }
     }
 
     for (let i = 0; i < bomber; i++) {
-        let x = Math.floor(Math.random()*matLen)
-        let y = Math.floor(Math.random()*matLen)
-        if(matrix[y][x] == 0) {
+        let x = Math.floor(Math.random() * matLen)
+        let y = Math.floor(Math.random() * matLen)
+        if (matrix[y][x] == 0) {
             matrix[y][x] = 5;
         }
     }
-    
-    io.emit("send matrix",matrix)
+
+    io.emit("send matrix", matrix)
     return matrix
 }
 
 generate(50, 100, 100, 50, 30, 1);
-
-function createCanvas(){
+function createCanvas() {
 
     for (let i = 0; i < matrix.length; i++) {
         for (let j = 0; j < matrix[i].length; j++) {
@@ -105,11 +110,18 @@ function createCanvas(){
     }
     return matrix
 }
+function weather(x){
+    if(x === true){
+        mull = 4
+    }
+    else {
+        mull = 10
+    }
+}
 
-
-function drawGame(){
+function drawGame() {
     for (var i in grassArr) {
-        grassArr[i].mul();
+        grassArr[i].mul(mull);
     }
     for (var i in grassEaterArr) {
         grassEaterArr[i].eat();
@@ -117,36 +129,36 @@ function drawGame(){
     for (var i in mansterArr) {
         mansterArr[i].eat();
     }
-    for(var i in bigMansterArr){
+    for (var i in bigMansterArr) {
         bigMansterArr[i].eat();
     }
-    for(var i in bomberArr){
+    for (var i in bomberArr) {
         bomberArr[i].move();
     }
 
-    io.emit("send matrix",matrix)
+    io.emit("send matrix", matrix)
     return matrix
 
 }
 
 createCanvas()
 setInterval(() => {
-    data  = {
-        grass : grassArr.length,
+    data = {
+        grass: grassArr.length,
         grassEater: grassEaterArr.length,
         manster: mansterArr.length,
         bigManster: bigMansterArr.length,
         bomber: bomberArr.length
     }
-    io.emit('statistics',data)
+    io.emit('statistics', data)
     drawGame()
 }, 500);
 
 
 
 
-io.on('connection', function(socket){
+io.on('connection', function (socket) {
     socket.emit('initial', matrix);
     socket.emit('send matrix', matrix);
-    
+    socket.on("signal",weather)
 })
