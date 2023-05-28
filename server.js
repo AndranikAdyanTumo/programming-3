@@ -17,7 +17,8 @@ const Grass = require("./grass")
 const GrassEater = require("./grassEater")
 const Manster = require("./manster")
 const BigManster = require("./bigManster")
-const Bomber = require("./bomber")
+const Bomber = require("./bomber");
+const { setTimeout } = require('timers/promises');
 
 
 grassArr = [];
@@ -27,14 +28,63 @@ bigMansterArr = [];
 bomberArr = [];
 matrix = [];
 
+//--------------------------------------------------
+
+liserY = null;
+
+function createLiser(l){
+    if(l){
+
+        liserY = Math.floor(Math.random() * matrix.length - 2)
+
+        for(var i in matrix){
+            matrix[liserY][i] = 6;
+            matrix[liserY + 1][i] = 6;
+            matrix[liserY + 2][i] = 6;
+
+            for (var i in grassArr) {
+                if (liserY <= grassArr[i].y && liserY >= grassArr[i].y) {
+                    grassArr.splice(i, 1);
+                    break;
+                }
+            }
+
+            for (var i in grassEaterArr) {
+                if (liserY <= grassEaterArr[i].y && liserY >= grassEaterArr[i].y) {
+                    grassEaterArr.splice(i, 1);
+                    break;
+                }
+            }
+
+            for (var i in mansterArr) {
+                if (liserY <= mansterArr[i].y && liserY >= mansterArr[i].y) {
+                    mansterArr.splice(i, 1);
+                    break;
+                }
+            }
+
+            for (var i in bigMansterArr) {
+                if (liserY <= bigMansterArr[i].y && liserY >= bigMansterArr[i].y) {
+                    bigMansterArr.splice(i, 1);
+                    break;
+                }
+            }
+
+            for (var i in bomberArr) {
+                if (liserY <= bomberArr[i].y && liserY >= bomberArr[i].y) {
+                    bomberArr.splice(i, 1);
+                    break;
+                }
+            }
+
+        }
+
+    }
+
+}
 
 
-// liserBtn = document.getElementById('liser');
-// liserBtn.addEventListener('click', createLiser);
-
-
-
-
+//--------------------------------------------------
 function generate(matLen, gr, grEat, manster, bigManster, bomber) {
     for (let i = 0; i < matLen; i++) {
         matrix[i] = []
@@ -151,8 +201,19 @@ setInterval(() => {
         bomber: bomberArr.length
     }
     io.emit('statistics', data)
-    drawGame()
-}, 500);
+    drawGame();
+    
+    for(var i in matrix){
+        if(liserY != null){
+            matrix[liserY][i] = 0;
+            matrix[liserY + 1][i] = 0;
+            matrix[liserY + 2][i] = 0;
+        }
+    }
+    
+    liserY = null;
+
+}, 250);
 
 
 
@@ -160,5 +221,6 @@ setInterval(() => {
 io.on('connection', function (socket) {
     socket.emit('initial', matrix);
     socket.emit('send matrix', matrix);
-    socket.on("signal",weather)
+    socket.on("weather signal", weather)
+    socket.on("laser signal", createLiser)
 })

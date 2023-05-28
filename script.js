@@ -1,7 +1,5 @@
-
-
 var side = 10;
-let socket = io ()
+let socket = io()
 let myMatrix = []
 
 
@@ -15,32 +13,52 @@ function setup() {
 }
 
 
+//--------------------------------------------------
+
+liserBtn = document.getElementById('liser');
+liserBtn.addEventListener('click', LiserSignal);
+
+
+liser = false
+function LiserSignal() {
+    liser = true;
+    socket.emit('laser signal', liser);
+    liser = false;
+}
+
+
+
+//--------------------------------------------------
+
+
+
 
 weatherBtn = document.getElementById('weather');
 weatherBtn.addEventListener('click', weatherColors);
 
 
+
 weather = true;
-function weatherColors(){
-    if(weather){
+function weatherColors() {
+    if (weather) {
         weather = false;
-    }else{
+    } else {
         weather = true;
     }
-    socket.emit("signal",weather)
+    socket.emit("weather signal", weather)
 }
 
 
 colors = {};
 
 function drawing(matrix) {
-// console.log(matrix);
+    // console.log(matrix);
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
 
 
 
-            if(weather){
+            if (weather) {
                 colors = {
                     bg: 'gray',
                     grass: 'green',
@@ -50,7 +68,7 @@ function drawing(matrix) {
                     bomber: 'black',
                     liser: 'red',
                 }
-            }else{
+            } else {
                 colors = {
                     bg: 'gray',
                     grass: 'white',
@@ -71,11 +89,11 @@ function drawing(matrix) {
                 fill(colors.grassEater)
             } else if (matrix[y][x] == 3) {
                 fill(colors.manster)
-            }else if (matrix[y][x] == 4) {
+            } else if (matrix[y][x] == 4) {
                 fill(colors.bigManster)
-            }else if (matrix[y][x] == 5) {
+            } else if (matrix[y][x] == 5) {
                 fill(colors.bomber)
-            }else if (matrix[y][x] == 6) {
+            } else if (matrix[y][x] == 6) {
                 fill(colors.liser)
             }
 
@@ -86,7 +104,7 @@ function drawing(matrix) {
 
 
 
-socket.on("initial", function(data){
+socket.on("initial", function (data) {
     myMatrix = data;
 })
 
