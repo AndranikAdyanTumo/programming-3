@@ -13,29 +13,36 @@ function setup() {
 }
 
 
-//--------------------------------------------------
-
-liserBtn = document.getElementById('liser');
-liserBtn.addEventListener('click', LiserSignal);
+gamingBtn = document.getElementById('gaming').addEventListener('click', start_stop);
 
 
-liser = false
-function LiserSignal() {
-    liser = true;
-    socket.emit('laser signal', liser);
-    liser = false;
+game = true;
+
+function start_stop(){
+    if(game){
+        game = false;
+    }else{
+        game = true;
+    }
+
+    socket.emit('gaming', game)
 }
 
 
 
-//--------------------------------------------------
+bombBtn = document.getElementById('bomb').addEventListener('click', boom);
+
+bomb = false;
+function boom(){
+    bomb = true;
+    socket.emit('bomb signal', bomb)
+    bomb = false
+}
 
 
 
 
-weatherBtn = document.getElementById('weather');
-weatherBtn.addEventListener('click', weatherColors);
-
+weatherBtn = document.getElementById('weather').addEventListener('click', weatherColors);
 
 
 weather = true;
@@ -66,7 +73,6 @@ function drawing(matrix) {
                     manster: 'blue',
                     bigManster: 'brown',
                     bomber: 'black',
-                    liser: 'red',
                 }
             } else {
                 colors = {
@@ -76,7 +82,6 @@ function drawing(matrix) {
                     manster: 'aqua',
                     bigManster: 'pink',
                     bomber: 'black',
-                    liser: 'red',
                 }
 
 

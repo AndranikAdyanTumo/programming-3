@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-let mull = 4
+var fs = require('fs');
 
 app.use(express.static("."));
 
@@ -18,7 +18,7 @@ const GrassEater = require("./grassEater")
 const Manster = require("./manster")
 const BigManster = require("./bigManster")
 const Bomber = require("./bomber");
-const { setTimeout } = require('timers/promises');
+
 
 
 grassArr = [];
@@ -27,64 +27,117 @@ mansterArr = [];
 bigMansterArr = [];
 bomberArr = [];
 matrix = [];
+let mull = 4
 
-//--------------------------------------------------
 
-liserY = null;
+function randint(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
 
-function createLiser(l){
-    if(l){
 
-        liserY = Math.floor(Math.random() * matrix.length - 2)
 
-        for(var i in matrix){
-            matrix[liserY][i] = 6;
-            matrix[liserY + 1][i] = 6;
-            matrix[liserY + 2][i] = 6;
+function createBoom(b) {
+    if (b) {
+        bombX = randint(3, matrix.length - 3);
+        bombY = randint(3, matrix.length - 3);
 
-            for (var i in grassArr) {
-                if (liserY <= grassArr[i].y && liserY >= grassArr[i].y) {
+
+        bombDirections = [
+            [bombX - 1, bombY - 1],
+            [bombX + 1, bombY - 1],
+            [bombX - 1, bombY],
+            [bombX + 1, bombY],
+            [bombX - 1, bombY + 1],
+            [bombX, bombY + 1],
+            [bombX, bombY - 1],
+            [bombX + 1, bombY + 1],
+            [bombX - 2, bombY],
+            [bombX - 2, bombY + 2],
+            [bombX, bombY + 2],
+            [bombX + 2, bombY + 2],
+            [bombX + 2, bombY],
+            [bombX + 2, bombY - 2],
+            [bombX, bombY - 2],
+            [bombX - 2, bombY - 2],
+            [bombX, bombY + 1],
+
+            [bombX - 1, bombY - 2],
+            [bombX + 1, bombY - 2],
+            [bombX + 2, bombY - 1],
+            [bombX + 2, bombY + 1],
+            [bombX + 1, bombY + 2],
+            [bombX - 1, bombY + 2],
+            [bombX - 2, bombY - 1],
+            [bombX - 2, bombY + 1],
+
+
+            [bombX - 1, bombY - 3],
+            [bombX, bombY - 3],
+            [bombX + 1, bombY - 3],
+            [bombX + 3, bombY - 3],
+
+            [bombX + 3, bombY - 1],
+            [bombX + 3, bombY],
+            [bombX + 3, bombY + 1],
+            [bombX + 3, bombY + 3],
+
+            [bombX + 1, bombY + 3],
+            [bombX, bombY + 3],
+            [bombX - 1, bombY + 3],
+            [bombX - 3, bombY + 3],
+
+            [bombX - 3, bombY + 1],
+            [bombX - 3, bombY],
+            [bombX - 3, bombY - 1],
+            [bombX - 3, bombY - 3]
+
+
+        ]
+
+        for (let i in bombDirections) {
+           
+            let x = bombDirections[i][0];
+            let y = bombDirections[i][1];
+
+            for (let i in grassArr) {
+                if (x == grassArr[i].x && y == grassArr[i].y) {
                     grassArr.splice(i, 1);
                     break;
                 }
             }
 
-            for (var i in grassEaterArr) {
-                if (liserY <= grassEaterArr[i].y && liserY >= grassEaterArr[i].y) {
+            for (let i in grassEaterArr) {
+                if (x == grassEaterArr[i].x && y == grassEaterArr[i].y) {
                     grassEaterArr.splice(i, 1);
                     break;
                 }
             }
 
-            for (var i in mansterArr) {
-                if (liserY <= mansterArr[i].y && liserY >= mansterArr[i].y) {
+            for (let i in mansterArr) {
+                if (x == mansterArr[i].x && y == mansterArr[i].y) {
                     mansterArr.splice(i, 1);
                     break;
                 }
             }
 
-            for (var i in bigMansterArr) {
-                if (liserY <= bigMansterArr[i].y && liserY >= bigMansterArr[i].y) {
+            for (let i in bigMansterArr) {
+                if (x == bigMansterArr[i].x && y == bigMansterArr[i].y) {
                     bigMansterArr.splice(i, 1);
                     break;
                 }
             }
 
-            for (var i in bomberArr) {
-                if (liserY <= bomberArr[i].y && liserY >= bomberArr[i].y) {
-                    bomberArr.splice(i, 1);
-                    break;
-                }
-            }
 
+            matrix[y][x] = 0;
         }
 
     }
 
+
 }
 
 
-//--------------------------------------------------
+
 function generate(matLen, gr, grEat, manster, bigManster, bomber) {
     for (let i = 0; i < matLen; i++) {
         matrix[i] = []
@@ -160,8 +213,8 @@ function createCanvas() {
     }
     return matrix
 }
-function weather(x){
-    if(x === true){
+function weather(x) {
+    if (x) {
         mull = 4
     }
     else {
@@ -191,29 +244,48 @@ function drawGame() {
 
 }
 
+
+
+var gameFlag = true;
+
+function gaming(g){
+    gameFlag = g;
+}
+
+
+
 createCanvas()
 setInterval(() => {
-    data = {
-        grass: grassArr.length,
-        grassEater: grassEaterArr.length,
-        manster: mansterArr.length,
-        bigManster: bigMansterArr.length,
-        bomber: bomberArr.length
-    }
-    io.emit('statistics', data)
-    drawGame();
-    
-    for(var i in matrix){
-        if(liserY != null){
-            matrix[liserY][i] = 0;
-            matrix[liserY + 1][i] = 0;
-            matrix[liserY + 2][i] = 0;
-        }
-    }
-    
-    liserY = null;
 
-}, 250);
+    if(gameFlag){
+
+        data = {
+            grass: grassArr.length,
+            grassEater: grassEaterArr.length,
+            manster: mansterArr.length,
+            bigManster: bigMansterArr.length,
+            bomber: bomberArr.length
+        }
+        
+        
+        const statisticsData = JSON.stringify(data)
+
+
+        fs.writeFile("./statistics.json", statisticsData, err=>{
+            if(err){
+              console.log("Error writing file" ,err);
+            }
+        })
+
+
+        io.emit('statistics', data)
+        
+
+        drawGame();
+    }
+
+}, 500);
+
 
 
 
@@ -221,6 +293,8 @@ setInterval(() => {
 io.on('connection', function (socket) {
     socket.emit('initial', matrix);
     socket.emit('send matrix', matrix);
-    socket.on("weather signal", weather)
-    socket.on("laser signal", createLiser)
+    socket.on("weather signal", weather);
+    socket.on('bomb signal', createBoom);
+    socket.on('gaming', gaming);
+
 })

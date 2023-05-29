@@ -7,24 +7,62 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Game</title>
 
-
-
 </head>
 
 
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/p5.min.js"></script>
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
-    
-    <span>Statistic</span><br><br>
-    <span>Grass:</span><span class="count", id="grassNum">0</span><br>
-    <span>Grass Eater:</span><span class="count", id="grassEaterNum">0</span><br>
-    <span>Manster:</span><span class="count", id="mansterNum">0</span><br>
-    <span>Big Manster:</span><span class="count", id="bigMansterNum">0</span><br>
-    <span>Bomber:</span><span class="count", id="bomberNum">0</span><br><br>
+    <link rel="stylesheet" href="style.css">
 
-    <button id="liser">Liser</button>
+
+    <div class="container">
+        <ul class="responsive-table">
+          <li class="table-header">
+            <div class="col col-1">Կերպար</div>
+            <div class="col col-2">Գույն</div>
+            <div class="col col-3">Գործողություն</div>
+            <div class="col col-4">Ստատիստիկա</div>
+          </li>
+          <li class="table-row">
+            <div class="col col-1">Խոտ</div>
+            <div class="col col-2"><div id="classColor">Կանաչ, Սպիտակ</div></div>
+            <div class="col col-3">Աճում է դատարկ վանդակների վրայով</div>
+            <div class="col col-4"><span id="grassNum">0</span></div>
+          </li>
+          <li class="table-row">
+            <div class="col col-1">Խոտակեր</div>
+            <div class="col col-2">Դեղին, Նարնջագույն</div>
+            <div class="col col-3">Ուտում է խոտ, բազմանում ուտելուց և մահանում սովից</div>
+            <div class="col col-4"><span id="grassEaterNum">0</span></div>
+          </li>
+          <li class="table-row">
+            <div class="col col-1">Հրեշ</div>
+            <div class="col col-2">Կապույտ, երկնագույն</div>
+            <div class="col col-3">Ուտում է խոտակեր, բազմանում ուտելուց և մահանում սովից</div>
+            <div class="col col-4"><span id="mansterNum">0</span></div>
+          </li>
+          <li class="table-row">
+            <div class="col col-1">Մեծ հրեշ</div>
+            <div class="col col-2">Շագանակագույն, վարդագույն</div>
+            <div class="col col-3">Ուտում է հրեշ, բազմանում ուտելուց և մահանում սովից</div>
+            <div class="col col-4"><span id="bigMansterNum">0</span></div>
+          </li>
+          <li class="table-row">
+            <div class="col col-1">Պայթուցիկ</div>
+            <div class="col col-2">Սև</div>
+            <div class="col col-3">Քայլում է դատարկ վանդակների և խոտի վրայով՝ պայթուցնելով իր շուրջը</div>
+            <div class="col col-4"><span id="bigMansterNum"><span id="bomberNum">0</span></div>
+          </li>
+        </ul>
+      </div>
+
+
+
+    <!-- <button id="liser">Liser</button> -->
+    <button id="bomb">BOOM!</button>
     <button id="weather">Weather</button>
+    <button id="gaming">Game Start/Stop</button><br>
 
     <script src="script.js" ></script>
 </body>
