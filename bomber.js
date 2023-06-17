@@ -25,6 +25,7 @@ module.exports = class Bomber extends LivingCreature {
 
     
     ];
+    this.bomb = 0;
     }
 
     getCordinates() {
@@ -55,7 +56,6 @@ module.exports = class Bomber extends LivingCreature {
 
     }
 
-    bomb = 0;
     move() {
         var found1 = this.chooseCell(0);
         var found2 = this.chooseCell(1);
