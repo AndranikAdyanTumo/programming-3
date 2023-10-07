@@ -5,6 +5,7 @@ module.exports = class Bomber extends LivingCreature {
         super(x, y);
 
         this.directions = [
+
         [this.x - 1, this.y - 1],
         [this.x, this.y - 1],
         [this.x + 1, this.y - 1],
@@ -23,8 +24,8 @@ module.exports = class Bomber extends LivingCreature {
         [this.x, this.y - 2],
         [this.x - 2, this.y - 2],
 
-    
     ];
+
     this.bomb = 0;
     }
 

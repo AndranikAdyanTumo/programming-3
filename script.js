@@ -98,8 +98,6 @@ function drawing(matrix) {
                 fill(colors.bigManster)
             } else if (matrix[y][x] == 5) {
                 fill(colors.bomber)
-            } else if (matrix[y][x] == 6) {
-                fill(colors.liser)
             }
 
             rect(x * side, y * side, side, side);
