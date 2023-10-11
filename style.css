@@ -33,7 +33,6 @@ small {
     font-size: 0.5em;
 }
 
-
 li {
     border-radius: 3px;
     padding: 25px 30px;
@@ -80,22 +79,12 @@ li {
     }
 
     .col {
-
         flex-basis: 100%;
-
     }
 
     .col {
         display: flex;
         padding: 10px 0;
-
-        &:before {
-            color: #6C7A89;
-            padding-right: 10px;
-            content: attr(data-label);
-            flex-basis: 50%;
-            text-align: right;
-        }
     }
 }
 

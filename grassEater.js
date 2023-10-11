@@ -98,7 +98,6 @@ module.exports = class GrassEater extends LivingCreature {
         }
     }
 
-
     die() {
         for (var i in grassEaterArr) {
             if (this.x == grassEaterArr[i].x && this.y == grassEaterArr[i].y) {

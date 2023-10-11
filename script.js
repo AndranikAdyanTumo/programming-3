@@ -30,20 +30,26 @@ function start_stop(){
 
 
 
-bombBtn = document.getElementById('bomb').addEventListener('click', boom);
-
 bomb = false;
 function boom(){
     bomb = true;
     socket.emit('bomb signal', bomb)
     bomb = false
 }
+bombBtn = document.getElementById('bomb').addEventListener('click', boom);
 
+
+function bombButtonDisable() {
+    document.getElementById("bomb").disabled = true;
+    setTimeout(function() {
+        document.getElementById("bomb").disabled = false;
+    }, 1000);
+}
+document.getElementById("bomb").addEventListener("click", bombButtonDisable);
 
 
 
 weatherBtn = document.getElementById('weather').addEventListener('click', weatherColors);
-
 
 weather = true;
 function weatherColors() {

@@ -48,5 +48,4 @@ module.exports = class LivingCreature {
         return arr[res];
     }
 
-
 }

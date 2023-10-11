@@ -2,8 +2,6 @@ const LivingCreature = require("./livingCreature")
 
 module.exports = class Grass extends LivingCreature{
     
-
-
     chooseCell(character) {
         var found = []; 
         for (var i in this.directions) {

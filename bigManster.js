@@ -77,7 +77,10 @@ module.exports = class BigManster extends LivingCreature{
 
 
     move() {
-        var found = this.chooseCell(0);
+        var found1 = this.chooseCell(0);
+        var found2 = this.chooseCell(1);
+        let found = found1.concat(found2)
+
         var newCell = this.random(found);
 
         if (newCell) {

@@ -17,8 +17,9 @@ const Grass = require("./grass")
 const GrassEater = require("./grassEater")
 const Manster = require("./manster")
 const BigManster = require("./bigManster")
-const Bomber = require("./bomber");
-
+const Bomber = require("./bomber")
+const boom = require("./boom")
+const generator = require("./generator")
 
 
 grassArr = [];
@@ -30,165 +31,10 @@ matrix = [];
 let mull = 4
 
 
-function randint(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min)
-}
+generator.generate(50, 1000, 100, 50, 30, 1);
+// generator.generate(50, 2500, 0, 0, 0, 0);
 
 
-
-function createBoom(b) {
-    if (b) {
-        bombX = randint(3, matrix.length - 3);
-        bombY = randint(3, matrix.length - 3);
-
-
-        bombDirections = [
-            [bombX - 1, bombY - 1],
-            [bombX + 1, bombY - 1],
-            [bombX - 1, bombY],
-            [bombX + 1, bombY],
-            [bombX - 1, bombY + 1],
-            [bombX, bombY + 1],
-            [bombX, bombY - 1],
-            [bombX + 1, bombY + 1],
-            [bombX - 2, bombY],
-            [bombX - 2, bombY + 2],
-            [bombX, bombY + 2],
-            [bombX + 2, bombY + 2],
-            [bombX + 2, bombY],
-            [bombX + 2, bombY - 2],
-            [bombX, bombY - 2],
-            [bombX - 2, bombY - 2],
-            [bombX, bombY + 1],
-
-            [bombX - 1, bombY - 2],
-            [bombX + 1, bombY - 2],
-            [bombX + 2, bombY - 1],
-            [bombX + 2, bombY + 1],
-            [bombX + 1, bombY + 2],
-            [bombX - 1, bombY + 2],
-            [bombX - 2, bombY - 1],
-            [bombX - 2, bombY + 1],
-
-
-            [bombX - 1, bombY - 3],
-            [bombX, bombY - 3],
-            [bombX + 1, bombY - 3],
-            [bombX + 3, bombY - 3],
-
-            [bombX + 3, bombY - 1],
-            [bombX + 3, bombY],
-            [bombX + 3, bombY + 1],
-            [bombX + 3, bombY + 3],
-
-            [bombX + 1, bombY + 3],
-            [bombX, bombY + 3],
-            [bombX - 1, bombY + 3],
-            [bombX - 3, bombY + 3],
-
-            [bombX - 3, bombY + 1],
-            [bombX - 3, bombY],
-            [bombX - 3, bombY - 1],
-            [bombX - 3, bombY - 3]
-
-
-        ]
-
-        for (let i in bombDirections) {
-           
-            let x = bombDirections[i][0];
-            let y = bombDirections[i][1];
-
-            for (let i in grassArr) {
-                if (x == grassArr[i].x && y == grassArr[i].y) {
-                    grassArr.splice(i, 1);
-                    break;
-                }
-            }
-
-            for (let i in grassEaterArr) {
-                if (x == grassEaterArr[i].x && y == grassEaterArr[i].y) {
-                    grassEaterArr.splice(i, 1);
-                    break;
-                }
-            }
-
-            for (let i in mansterArr) {
-                if (x == mansterArr[i].x && y == mansterArr[i].y) {
-                    mansterArr.splice(i, 1);
-                    break;
-                }
-            }
-
-            for (let i in bigMansterArr) {
-                if (x == bigMansterArr[i].x && y == bigMansterArr[i].y) {
-                    bigMansterArr.splice(i, 1);
-                    break;
-                }
-            }
-
-
-            matrix[y][x] = 0;
-        }
-
-    }
-
-
-}
-
-
-
-function generate(matLen, gr, grEat, manster, bigManster, bomber) {
-    for (let i = 0; i < matLen; i++) {
-        matrix[i] = []
-        for (let j = 0; j < matLen; j++) {
-            matrix[i][j] = 0
-        }
-    }
-
-    for (let i = 0; i < gr; i++) {
-        let x = Math.floor(Math.random() * matLen)
-        let y = Math.floor(Math.random() * matLen)
-        if (matrix[y][x] == 0) {
-            matrix[y][x] = 1
-        }
-    }
-    for (let i = 0; i < grEat; i++) {
-        let x = Math.floor(Math.random() * matLen)
-        let y = Math.floor(Math.random() * matLen)
-        if (matrix[y][x] == 0) {
-            matrix[y][x] = 2
-        }
-    }
-    for (let i = 0; i < manster; i++) {
-        let x = Math.floor(Math.random() * matLen)
-        let y = Math.floor(Math.random() * matLen)
-        if (matrix[y][x] == 0) {
-            matrix[y][x] = 3
-        }
-    }
-
-    for (let i = 0; i < bigManster; i++) {
-        let x = Math.floor(Math.random() * matLen)
-        let y = Math.floor(Math.random() * matLen)
-        if (matrix[y][x] == 0) {
-            matrix[y][x] = 4
-        }
-    }
-
-    for (let i = 0; i < bomber; i++) {
-        let x = Math.floor(Math.random() * matLen)
-        let y = Math.floor(Math.random() * matLen)
-        if (matrix[y][x] == 0) {
-            matrix[y][x] = 5;
-        }
-    }
-
-    io.emit("send matrix", matrix)
-    return matrix
-}
-
-generate(50, 100, 100, 50, 30, 1);
 function createCanvas() {
 
     for (let i = 0; i < matrix.length; i++) {
@@ -247,9 +93,8 @@ function drawGame() {
 
 
 var gameFlag = true;
-
-function gaming(g){
-    gameFlag = g;
+function gaming(game){
+    gameFlag = game;
 }
 
 
@@ -287,14 +132,10 @@ setInterval(() => {
 }, 500);
 
 
-
-
-
 io.on('connection', function (socket) {
     socket.emit('initial', matrix);
     socket.emit('send matrix', matrix);
     socket.on("weather signal", weather);
-    socket.on('bomb signal', createBoom);
+    socket.on('bomb signal', boom.createBoom);
     socket.on('gaming', gaming);
-
 })

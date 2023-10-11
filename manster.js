@@ -32,7 +32,7 @@ module.exports = class Manster extends LivingCreature{
         
         }
         
-    
+
     mul() {
         var found = this.chooseCell(1);
         var newCell = this.random(found);
@@ -45,6 +45,7 @@ module.exports = class Manster extends LivingCreature{
         }
     }
     
+
     eat() {
         var found = this.chooseCell(2);
         const newCell = this.random(found);
@@ -96,6 +97,7 @@ module.exports = class Manster extends LivingCreature{
             this.die();
         }
     }
+    
 
     die() {
         for (var i in mansterArr) {
