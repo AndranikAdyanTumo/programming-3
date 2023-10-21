@@ -1,9 +1,9 @@
 const LivingCreature = require("./livingCreature")
 
 module.exports = class BigManster extends LivingCreature{
-    constructor(x, y, index){
+    constructor(x, y){
 
-        super(x, y, index);
+        super(x, y);
         this.energy = 30;
         
         }

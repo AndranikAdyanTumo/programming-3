@@ -5,11 +5,12 @@ function randint(min, max) {
 
 function createBoom(boom) {
     if (boom) {
-        bombX = randint(3, matrix.length - 3);
-        bombY = randint(3, matrix.length - 3);
+        bombX = randint(4, matrix.length - 4);
+        bombY = randint(4, matrix.length - 4);
 
 
         bombDirections = [
+            [bombX, bombY],
             [bombX - 1, bombY - 1],
             [bombX + 1, bombY - 1],
             [bombX - 1, bombY],

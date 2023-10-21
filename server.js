@@ -39,21 +39,31 @@ function createCanvas() {
 
     for (let i = 0; i < matrix.length; i++) {
         for (let j = 0; j < matrix[i].length; j++) {
-            if (matrix[i][j] === 1) {
-                const gr = new Grass(j, i, 1);
-                grassArr.push(gr);
-            } else if (matrix[i][j] === 2) {
-                const gre = new GrassEater(j, i, 1);
-                grassEaterArr.push(gre);
-            } else if (matrix[i][j] === 3) {
-                const manster = new Manster(j, i, 1);
-                mansterArr.push(manster);
-            } else if (matrix[i][j] === 4) {
-                const bigManster = new BigManster(j, i, 1);
-                bigMansterArr.push(bigManster);
-            } else if (matrix[i][j] === 5) {
-                const bomber = new Bomber(j, i, 1);
-                bomberArr.push(bomber);
+            switch (matrix[i][j]) {
+                case 1:
+                    const gr = new Grass(j, i);
+                    grassArr.push(gr);
+                    break;
+            
+                case 2:
+                    const gre = new GrassEater(j, i);
+                    grassEaterArr.push(gre);
+                    break;
+                
+                case 3:
+                    const manster = new Manster(j, i);
+                    mansterArr.push(manster);
+                    break;
+        
+                case 4:
+                    const bigManster = new BigManster(j, i);
+                    bigMansterArr.push(bigManster);
+                    break;
+        
+                case 5:
+                    const bomber = new Bomber(j, i);
+                    bomberArr.push(bomber);
+                    break;
             }
         }
     }
@@ -85,8 +95,8 @@ function drawGame() {
         bomberArr[i].move();
     }
 
-    io.emit("send matrix", matrix)
-    return matrix
+    io.emit("send matrix", matrix);
+    return matrix;
 
 }
 

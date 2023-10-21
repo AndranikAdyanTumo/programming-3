@@ -1,9 +1,9 @@
 const LivingCreature = require("./livingCreature")
 
 module.exports = class Manster extends LivingCreature{
-    constructor(x, y, index){
+    constructor(x, y){
 
-        super(x, y, index);
+        super(x, y);
         this.energy = 15;
         
         }
@@ -26,10 +26,8 @@ module.exports = class Manster extends LivingCreature{
         }
         
         chooseCell(character) {
-            
             this.getNewCoordinates();
             return super.chooseCell(character);
-        
         }
         
 

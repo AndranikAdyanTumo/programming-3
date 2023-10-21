@@ -38,17 +38,6 @@ function boom(){
 }
 bombBtn = document.getElementById('bomb').addEventListener('click', boom);
 
-
-function bombButtonDisable() {
-    document.getElementById("bomb").disabled = true;
-    setTimeout(function() {
-        document.getElementById("bomb").disabled = false;
-    }, 1000);
-}
-document.getElementById("bomb").addEventListener("click", bombButtonDisable);
-
-
-
 weatherBtn = document.getElementById('weather').addEventListener('click', weatherColors);
 
 weather = true;
@@ -69,8 +58,6 @@ function drawing(matrix) {
     for (var y = 0; y < matrix.length; y++) {
         for (var x = 0; x < matrix[y].length; x++) {
 
-
-
             if (weather) {
                 colors = {
                     bg: 'gray',
@@ -85,25 +72,37 @@ function drawing(matrix) {
                     bg: 'gray',
                     grass: 'white',
                     grassEater: 'orange',
-                    manster: 'aqua',
+                    manster: 'red',
                     bigManster: 'pink',
                     bomber: 'black',
                 }
 
 
             }
-            if (matrix[y][x] == 0) {
-                fill(colors.bg);
-            } else if (matrix[y][x] == 1) {
-                fill(colors.grass);
-            } else if (matrix[y][x] == 2) {
-                fill(colors.grassEater)
-            } else if (matrix[y][x] == 3) {
-                fill(colors.manster)
-            } else if (matrix[y][x] == 4) {
-                fill(colors.bigManster)
-            } else if (matrix[y][x] == 5) {
-                fill(colors.bomber)
+
+            switch (matrix[y][x]) {
+                case 0:
+                    fill(colors.bg);
+                    break;
+                case 1:
+                    fill(colors.grass);
+                    break;
+            
+                case 2:
+                    fill(colors.grassEater)
+                    break;
+                
+                case 3:
+                    fill(colors.manster)
+                    break;
+        
+                case 4:
+                    fill(colors.bigManster)
+                    break;
+        
+                case 5:
+                    fill(colors.bomber)
+                    break;
             }
 
             rect(x * side, y * side, side, side);
