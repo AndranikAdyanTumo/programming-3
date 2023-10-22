@@ -4,11 +4,11 @@ let myMatrix = []
 
 
 function setup() {
-    setTimeout(() => {
-        createCanvas(myMatrix[0].length * side, myMatrix.length * side);
-        background('#acacac');
+	setTimeout(() => {
+		createCanvas(myMatrix[0].length * side, myMatrix.length * side);
+		background('#acacac');
 
-    }, 500);
+	}, 500);
 
 }
 
@@ -19,22 +19,22 @@ gamingBtn = document.getElementById('gaming').addEventListener('click', start_st
 game = true;
 
 function start_stop(){
-    if(game){
-        game = false;
-    }else{
-        game = true;
-    }
+	if(game){
+		game = false;
+	}else{
+		game = true;
+	}
 
-    socket.emit('gaming', game)
+	socket.emit('gaming', game)
 }
 
 
 
 bomb = false;
 function boom(){
-    bomb = true;
-    socket.emit('bomb signal', bomb)
-    bomb = false
+	bomb = true;
+	socket.emit('bomb signal', bomb)
+	bomb = false
 }
 bombBtn = document.getElementById('bomb').addEventListener('click', boom);
 
@@ -42,78 +42,85 @@ weatherBtn = document.getElementById('weather').addEventListener('click', weathe
 
 weather = true;
 function weatherColors() {
-    if (weather) {
-        weather = false;
-    } else {
-        weather = true;
-    }
-    socket.emit("weather signal", weather)
+	if (weather) {
+		weather = false;
+	} else {
+		weather = true;
+	}
+	socket.emit("weather signal", weather)
 }
 
 
 colors = {};
 
 function drawing(matrix) {
-    // console.log(matrix);
-    for (var y = 0; y < matrix.length; y++) {
-        for (var x = 0; x < matrix[y].length; x++) {
+	// console.log(matrix);
+	for (var y = 0; y < matrix.length; y++) {
+		for (var x = 0; x < matrix[y].length; x++) {
 
-            if (weather) {
-                colors = {
-                    bg: 'gray',
-                    grass: 'green',
-                    grassEater: 'yellow',
-                    manster: 'blue',
-                    bigManster: 'brown',
-                    bomber: 'black',
-                }
-            } else {
-                colors = {
-                    bg: 'gray',
-                    grass: 'white',
-                    grassEater: 'orange',
-                    manster: 'red',
-                    bigManster: 'pink',
-                    bomber: 'black',
-                }
+			if (weather) {
+				colors = {
+					bg: 'gray',
+					grass: 'green',
+					grassEater: 'yellow',
+					manster: 'crimson',
+					bigManster: 'brown',
+					bomber: 'black',
+					freezer: 'blue',
+				}
+			} else {
+				colors = {
+					bg: 'gray',
+					grass: 'white',
+					grassEater: 'orange',
+					manster: 'red',
+					bigManster: 'pink',
+					bomber: 'black',
+					freezer: 'blue',
+				}
 
 
-            }
+			}
 
-            switch (matrix[y][x]) {
-                case 0:
-                    fill(colors.bg);
-                    break;
-                case 1:
-                    fill(colors.grass);
-                    break;
-            
-                case 2:
-                    fill(colors.grassEater)
-                    break;
-                
-                case 3:
-                    fill(colors.manster)
-                    break;
-        
-                case 4:
-                    fill(colors.bigManster)
-                    break;
-        
-                case 5:
-                    fill(colors.bomber)
-                    break;
-            }
+			switch (matrix[y][x]) {
+				case 0:
+					fill(colors.bg);
+					break;
+					
+				case 1:
+					fill(colors.grass);
+					break;
 
-            rect(x * side, y * side, side, side);
-        }
-    }
+				case 2:
+					fill(colors.grassEater);
+					break;
+
+				case 3:
+					fill(colors.manster);
+					break;
+		
+				case 4:
+					fill(colors.bigManster);
+					break;
+
+				case 5:
+					fill(colors.bomber);
+					break;
+
+				case 6:
+					fill(colors.freezer);
+					break;
+			}
+
+			rect(x * side, y * side, side, side);
+		}
+	}
 }
 
 
 
 socket.on("initial", function (data) {
-    myMatrix = data;
+	myMatrix = data;
 })
 
 socket.on("send matrix", drawing)
@@ -128,11 +135,11 @@ bigMansterCount = document.getElementById('bigMansterNum');
 bomberCount = document.getElementById('bomberNum');
 
 function getGrassNum(data) {
-    grassCount.innerText = data.grass;
-    grassEaterCount.innerText = data.grassEater;
-    mansterCount.innerText = data.manster;
-    bigMansterCount.innerText = data.bigManster
-    bomberCount.innerText = data.bomber;
+	grassCount.innerText = data.grass;
+	grassEaterCount.innerText = data.grassEater;
+	mansterCount.innerText = data.manster;
+	bigMansterCount.innerText = data.bigManster
+	bomberCount.innerText = data.bomber;
 }
 
 
