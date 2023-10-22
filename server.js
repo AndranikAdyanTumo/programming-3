@@ -80,6 +80,7 @@ function weather(x) {
 	}
 }
 
+
 function drawGame() {
 	for (var i in grassArr) {
 		grassArr[i].mul(mull);
