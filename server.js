@@ -68,7 +68,7 @@ function createCanvas() {
 			}
 		}
 	}
-	// freezerPersonage = new Freezer(Math.floor(matrixLen / 2), Math.floor(matrixLen / 2));
+	freezerPersonage = new Freezer(Math.floor(matrixLen / 2), Math.floor(matrixLen / 2));
 	return matrix;
 }
 function weather(x) {
