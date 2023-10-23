@@ -19,6 +19,8 @@ const Manster = require("./manster")
 const BigManster = require("./bigManster")
 const Bomber = require("./bomber")
 const Freezer = require('./freezer');
+const Arsonist = require("./arsonist")
+const Fire = require("./fire")
 const boom = require("./boom")
 const generator = require("./generator")
 
@@ -28,12 +30,14 @@ grassEaterArr = [];
 mansterArr = [];
 bigMansterArr = [];
 bomberArr = [];
+arsonistArr = [];
+fireArr = [];
 matrix = [];
 let mull = 4
 
-matrixLen = 50;
-// generator.generate(50, 1000, 100, 50, 30, 1);
-generator.generate(matrixLen, 0, 0, 0, 0, 0);
+matrixLen = 70;
+generator.generate(matrixLen, 1000, 50, 25, 15, 1, 1);
+// generator.generate(matrixLen, 2500, 0, 0, 0, 1, 1);
 
 
 function createCanvas() {
@@ -65,10 +69,20 @@ function createCanvas() {
 					const bomber = new Bomber(j, i);
 					bomberArr.push(bomber);
 					break;
+
+				case 6:
+					const arsonist = new Arsonist(j, i);
+					arsonistArr.push(arsonist);
+					break;
+
+				case 7:
+					const fire = new Fire(j, i);
+					fireArr.push(fire);
+					break;
 			}
 		}
 	}
-	freezerPersonage = new Freezer(Math.floor(matrixLen / 2), Math.floor(matrixLen / 2));
+	// freezerPersonage = new Freezer(Math.floor(matrixLen / 2), Math.floor(matrixLen / 2));
 	return matrix;
 }
 function weather(x) {
@@ -97,14 +111,18 @@ function drawGame() {
 	for (var i in bomberArr) {
 		bomberArr[i].move();
 	}
+	for (var i in arsonistArr) {
+		arsonistArr[i].move();
+	}
+	for (var i in fireArr) {
+		fireArr[i].eat();
+	}
 
-	freezerPersonage.move();
+	// freezerPersonage.move();
 
 	io.emit("send matrix", matrix);
 	return matrix;
-
 }
-
 
 
 var gameFlag = true;
@@ -122,27 +140,24 @@ setInterval(() => {
 			grassEater: grassEaterArr.length,
 			manster: mansterArr.length,
 			bigManster: bigMansterArr.length,
-			bomber: bomberArr.length
+			bomber: bomberArr.length,
+			arsonist: arsonistArr.length,
 		}
-		
-		
+
 		const statisticsData = JSON.stringify(data)
 
-
-		fs.writeFile("./statistics.json", statisticsData, err=>{
+		fs.writeFile("./statistics.json", statisticsData, err => {
 			if(err){
-			  console.log("Error writing file" ,err);
+				console.log("Error writing file" ,err);
 			}
 		})
 
-
 		io.emit('statistics', data)
-		
 
 		drawGame();
 	}
 
-}, 500);
+}, 300);
 
 
 io.on('connection', function (socket) {

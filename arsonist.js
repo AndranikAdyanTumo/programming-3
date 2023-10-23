@@ -1,9 +1,10 @@
 const LivingCreature = require("./livingCreature")
+const Fire = require("./fire")
 
-module.exports = class Bomber extends LivingCreature {
+module.exports = class Arsonist extends LivingCreature {
 	constructor(x, y) {
 		super(x, y);
-		this.bomb = 0;
+		this.fire = 0;
 	}
 
 	getCordinates() {
@@ -17,14 +18,6 @@ module.exports = class Bomber extends LivingCreature {
 			[this.x, this.y + 1],
 			[this.x + 1, this.y + 1],
 			[this.x, this.y + 1],
-			[this.x - 2, this.y],
-			[this.x - 2, this.y + 2],
-			[this.x, this.y + 2],
-			[this.x + 2, this.y + 2],
-			[this.x + 2, this.y ],
-			[this.x + 2, this.y - 2],
-			[this.x, this.y - 2],
-			[this.x - 2, this.y - 2],
 		];
 	}
 
@@ -45,7 +38,7 @@ module.exports = class Bomber extends LivingCreature {
 			var newX = newCell[0];
 			var newY = newCell[1];
 			
-			matrix[newY][newX] = 5;
+			matrix[newY][newX] = 6;
 
 			matrix[this.y][this.x] = 0;
 
@@ -53,52 +46,25 @@ module.exports = class Bomber extends LivingCreature {
 			this.x = newX;
 			this.y = newY;
 
-			this.bomb++;
+			this.fire++;
 		}
 
-		if(this.bomb == 5){
+		if(this.fire == 30){
 
 			for(var i in this.directions){
 				let x = this.directions[i][0]
 				let y = this.directions[i][1]
-				if (( x > 2 && x< matrix[0].length - 2) && (y > 2 && y < matrix.length - 2)) {
+				if (( x > 2 && x < matrix[0].length - 2) && (y > 2 && y < matrix.length - 2)) {
 					for (var i in grassArr) {
 						if (x == grassArr[i].x && y == grassArr[i].y) {
 							grassArr.splice(i, 1);
 							break;
 						}
 					}
-
-					for (var i in grassEaterArr) {
-						if (x == grassEaterArr[i].x && y == grassEaterArr[i].y) {
-							grassEaterArr.splice(i, 1);
-							break;
-						}
-					}
-
-					for (var i in mansterArr) {
-						if (x == mansterArr[i].x && y == mansterArr[i].y) {
-							mansterArr.splice(i, 1);
-							break;
-						}
-					}
-
-					for (var i in bigMansterArr) {
-						if (x == bigMansterArr[i].x && y == bigMansterArr[i].y) {
-							bigMansterArr.splice(i, 1);
-							break;
-						}
-					}
-
-
-					matrix[y][x] = 0;
+					fireArr[i] = new Fire(x, y);
 				}
-				
 			}
-
-			this.bomb = 0;
+			this.fire = 0;
 		}
-
 	}
-
 }

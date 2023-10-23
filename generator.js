@@ -4,7 +4,7 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
-function generate(matLen, gr, grEat, manster, bigManster, bomber) {
+function generate(matLen, gr, grEat, manster, bigManster, bomber, arsonist) {
 	for (let i = 0; i < matLen; i++) {
 		matrix[i] = []
 		for (let j = 0; j < matLen; j++) {
@@ -45,24 +45,31 @@ function generate(matLen, gr, grEat, manster, bigManster, bomber) {
 		matrix[y][x] = 5;
 	}
 
+	for (let i = 0; i < arsonist; i++) {
+		let x = Math.floor(Math.random() * matLen)
+		let y = Math.floor(Math.random() * matLen)
 
-	let y = Math.floor(matLen / 2);
-	let x = Math.floor(matLen / 2);
-	freezerBody = [
-		[x, y],
-		[x - 1, y - 1],
-		[x, y - 1],
-		[x + 1, y - 1],
-		[x - 1, y],
-		[x + 1, y],
-		[x - 1, y + 1],
-		[x, y + 1],
-		[x + 1, y + 1],
-	];
-
-	for(let cordinates of freezerBody){
-		matrix[cordinates[1]][cordinates[0]] = 6;
+		matrix[y][x] = 6;
 	}
+
+
+	// let y = Math.floor(matLen / 2);
+	// let x = Math.floor(matLen / 2);
+	// freezerBody = [
+	// 	[x, y],
+	// 	[x - 1, y - 1],
+	// 	[x, y - 1],
+	// 	[x + 1, y - 1],
+	// 	[x - 1, y],
+	// 	[x + 1, y],
+	// 	[x - 1, y + 1],
+	// 	[x, y + 1],
+	// 	[x + 1, y + 1],
+	// ];
+
+	// for(let cordinates of freezerBody){
+	// 	matrix[cordinates[1]][cordinates[0]] = 7;
+	// }
 
 	io.emit("send matrix", matrix);
 	return matrix;

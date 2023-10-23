@@ -62,24 +62,26 @@ function drawing(matrix) {
 				colors = {
 					bg: 'gray',
 					grass: 'green',
-					grassEater: 'yellow',
+					grassEater: 'lightGreen',
 					manster: 'crimson',
-					bigManster: 'brown',
+					bigManster: 'violet',
 					bomber: 'black',
-					freezer: 'blue',
+					arsonist: 'yellow',
+					fire: 'orange',
+					// freezer: 'blue',
 				}
 			} else {
 				colors = {
 					bg: 'gray',
 					grass: 'white',
-					grassEater: 'orange',
+					grassEater: 'khaki',
 					manster: 'red',
 					bigManster: 'pink',
 					bomber: 'black',
-					freezer: 'blue',
+					arsonist: 'yellow',
+					fire: 'orange',
+					// freezer: 'blue',
 				}
-
-
 			}
 
 			switch (matrix[y][x]) {
@@ -108,15 +110,18 @@ function drawing(matrix) {
 					break;
 
 				case 6:
-					fill(colors.freezer);
+					fill(colors.arsonist);
 					break;
+				case 7:
+					fill(colors.fire);
+					break;
+
 			}
 
 			rect(x * side, y * side, side, side);
 		}
 	}
 }
-
 
 
 socket.on("initial", function (data) {
@@ -126,13 +131,12 @@ socket.on("initial", function (data) {
 socket.on("send matrix", drawing)
 
 
-
-
 grassCount = document.getElementById('grassNum');
 grassEaterCount = document.getElementById('grassEaterNum');
 mansterCount = document.getElementById('mansterNum');
 bigMansterCount = document.getElementById('bigMansterNum');
 bomberCount = document.getElementById('bomberNum');
+arsonistCount = document.getElementById('arsonistNum')
 
 function getGrassNum(data) {
 	grassCount.innerText = data.grass;
@@ -140,6 +144,7 @@ function getGrassNum(data) {
 	mansterCount.innerText = data.manster;
 	bigMansterCount.innerText = data.bigManster
 	bomberCount.innerText = data.bomber;
+	arsonistCount.innerText = data.arsonist;
 }
 
 
