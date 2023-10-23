@@ -22,7 +22,8 @@ const Freezer = require('./freezer');
 const Arsonist = require("./arsonist")
 const Fire = require("./fire")
 const boom = require("./boom")
-const generator = require("./generator")
+const generator = require("./generator");
+const { log } = require('console');
 
 
 grassArr = [];
@@ -36,8 +37,8 @@ matrix = [];
 let mull = 4
 
 matrixLen = 70;
-generator.generate(matrixLen, 1000, 50, 25, 15, 1, 1);
-// generator.generate(matrixLen, 2500, 0, 0, 0, 1, 1);
+// generator.generate(matrixLen, 1000, 50, 25, 15, 1, 1);
+generator.generate(matrixLen, 2500, 0, 0, 0, 1, 1);
 
 
 function createCanvas() {
@@ -165,5 +166,10 @@ io.on('connection', function (socket) {
 	socket.emit('send matrix', matrix);
 	socket.on("weather signal", weather);
 	socket.on('bomb signal', boom.createBoom);
+	socket.on('fire signal', (signal) => {
+				for (var i in arsonistArr) {
+					arsonistArr[i].burn(signal);
+				}
+			})
 	socket.on('gaming', gaming);
 })

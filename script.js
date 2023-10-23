@@ -31,15 +31,24 @@ function start_stop(){
 
 
 bomb = false;
-function boom(){
+function boomSender(){
 	bomb = true;
 	socket.emit('bomb signal', bomb)
 	bomb = false
 }
-bombBtn = document.getElementById('bomb').addEventListener('click', boom);
+bombBtn = document.getElementById('bomb').addEventListener('click', boomSender);
+
+
+fire = false;
+function fireSender(){
+	fire = true;
+	socket.emit('fire signal', fire)
+	fire = false
+}
+fireBtn = document.getElementById('burning').addEventListener('click', fireSender);
+
 
 weatherBtn = document.getElementById('weather').addEventListener('click', weatherColors);
-
 weather = true;
 function weatherColors() {
 	if (weather) {

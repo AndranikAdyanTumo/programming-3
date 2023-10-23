@@ -4,7 +4,6 @@ const Fire = require("./fire")
 module.exports = class Arsonist extends LivingCreature {
 	constructor(x, y) {
 		super(x, y);
-		this.fire = 0;
 	}
 
 	getCordinates() {
@@ -24,7 +23,6 @@ module.exports = class Arsonist extends LivingCreature {
 	chooseCell(character) {
 		this.getCordinates()
 		return super.chooseCell(character)
-
 	}
 
 	move() {
@@ -45,26 +43,25 @@ module.exports = class Arsonist extends LivingCreature {
 
 			this.x = newX;
 			this.y = newY;
-
-			this.fire++;
-		}
-
-		if(this.fire == 30){
-
-			for(var i in this.directions){
-				let x = this.directions[i][0]
-				let y = this.directions[i][1]
-				if (( x > 2 && x < matrix[0].length - 2) && (y > 2 && y < matrix.length - 2)) {
-					for (var i in grassArr) {
-						if (x == grassArr[i].x && y == grassArr[i].y) {
-							grassArr.splice(i, 1);
-							break;
-						}
-					}
-					fireArr[i] = new Fire(x, y);
-				}
-			}
-			this.fire = 0;
 		}
 	}
+
+	burn(signal){
+		if(signal){
+		for(var i in this.directions){
+			let x = this.directions[i][0]
+			let y = this.directions[i][1]
+			if (( x > 2 && x < matrix[0].length - 2) && (y > 2 && y < matrix.length - 2)) {
+				for (var i in grassArr) {
+					if (x == grassArr[i].x && y == grassArr[i].y) {
+						grassArr.splice(i, 1);
+						break;
+					}
+				}
+				fireArr[i] = new Fire(x, y);
+				}
+			}
+		}
+	}
+
 }

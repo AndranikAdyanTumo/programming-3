@@ -3,7 +3,6 @@ const LivingCreature = require("./livingCreature")
 module.exports = class Fire extends LivingCreature {
 	constructor(x, y) {
 		super(x, y);
-		this.energy = 1;
 		this.directions = [];
 	}
 
@@ -76,10 +75,7 @@ module.exports = class Fire extends LivingCreature {
 			this.x = newX;
 			this.y = newY;
 		}
-
-		
 		this.die();
-		
 	}
 
 	die() {
