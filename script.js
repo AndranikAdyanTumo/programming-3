@@ -63,7 +63,6 @@ function weatherColors() {
 colors = {};
 
 function drawing(matrix) {
-	// console.log(matrix);
 	for (var y = 0; y < matrix.length; y++) {
 		for (var x = 0; x < matrix[y].length; x++) {
 
@@ -77,7 +76,6 @@ function drawing(matrix) {
 					bomber: 'black',
 					arsonist: 'yellow',
 					fire: 'orange',
-					// freezer: 'blue',
 				}
 			} else {
 				colors = {
@@ -89,7 +87,6 @@ function drawing(matrix) {
 					bomber: 'black',
 					arsonist: 'yellow',
 					fire: 'orange',
-					// freezer: 'blue',
 				}
 			}
 

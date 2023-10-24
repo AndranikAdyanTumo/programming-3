@@ -18,12 +18,10 @@ const GrassEater = require("./grassEater")
 const Manster = require("./manster")
 const BigManster = require("./bigManster")
 const Bomber = require("./bomber")
-const Freezer = require('./freezer');
 const Arsonist = require("./arsonist")
 const Fire = require("./fire")
 const boom = require("./boom")
 const generator = require("./generator");
-const { log } = require('console');
 
 
 grassArr = [];
@@ -83,7 +81,7 @@ function createCanvas() {
 			}
 		}
 	}
-	// freezerPersonage = new Freezer(Math.floor(matrixLen / 2), Math.floor(matrixLen / 2));
+	
 	return matrix;
 }
 function weather(x) {
@@ -118,8 +116,6 @@ function drawGame() {
 	for (var i in fireArr) {
 		fireArr[i].eat();
 	}
-
-	// freezerPersonage.move();
 
 	io.emit("send matrix", matrix);
 	return matrix;
