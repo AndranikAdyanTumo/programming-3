@@ -35,8 +35,8 @@ matrix = [];
 let mull = 4
 
 matrixLen = 70;
-// generator.generate(matrixLen, 1000, 50, 25, 15, 1, 1);
-generator.generate(matrixLen, 2500, 0, 0, 0, 1, 1);
+generator.generate(matrixLen, 1000, 50, 25, 15, 1, 1);
+// generator.generate(matrixLen, 2500, 0, 0, 0, 1, 1);
 
 
 function createCanvas() {
