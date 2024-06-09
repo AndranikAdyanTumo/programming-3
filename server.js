@@ -3,6 +3,7 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var fs = require('fs');
+const PORT = 3000
 
 app.use(express.static("."));
 
@@ -10,8 +11,9 @@ app.get('/', function (req, res) {
 	res.redirect('index.html');
 });
 
-server.listen(3000);
 
+server.listen(PORT);
+console.log(`Server running at http://localhost:${PORT}/`);
 
 const Grass = require("./grass")
 const GrassEater = require("./grassEater")
@@ -169,3 +171,9 @@ io.on('connection', function (socket) {
 			})
 	socket.on('gaming', gaming);
 })
+ 
+process.on('SIGTSTP', () => {
+	server.close(() => {
+		console.log('Process terminated');
+	});
+});
